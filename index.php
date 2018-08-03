@@ -110,7 +110,7 @@
 	    // Pega a string do conteúdo atual
 	    HTMLTemporario = $wrapper.innerHTML,
 	    // Novo HTML que será inserido
-	    HTMLNovo = '<div>Processando...</div><div class="progress"><div class="indeterminate"></div></div>';
+	    HTMLNovo = '<div>Processando...</div><div class="preloader-wrapper small active"><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 
 		// Concatena as strings colocando o novoHTML antes do HTMLTemporario
 		HTMLTemporario = HTMLNovo + HTMLTemporario;
