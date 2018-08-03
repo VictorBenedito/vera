@@ -72,7 +72,7 @@
 		<div class="barra">
       		
   		</div>
-		<progress max="100" id="progresso" value="0"></progress>
+		<!--<progress max="100" id="progresso" value="0"></progress>-->
 		<!-- Modal Structure -->
 		<div id="modal1" class="modal">
 			<div class="modal-content">
