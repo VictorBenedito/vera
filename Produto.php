@@ -2,6 +2,7 @@
 
 class Produto{
     private $barra;
+    private $quantidade;
     private $codigoInterno;
     private $descricao;
     private $unidade;
@@ -9,6 +10,10 @@ class Produto{
     
     function getBarra() {
         return $this->barra;
+    }
+
+    function getQuantidade() {
+        return $this->quantidade;
     }
 
     function getCodigoInterno() {
@@ -29,6 +34,10 @@ class Produto{
 
     function setBarra($barra) {
         $this->barra = $barra;
+    }
+
+    function setQuantidade($quantidade) {
+        $this->quantidade = $quantidade;
     }
 
     function setCodigoInterno($codigoInterno) {

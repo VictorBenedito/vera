@@ -80,17 +80,27 @@
       }
       //$produtos = array();
       $contador = 1;
+      $produtos = array();
       foreach($dados as $linha){
         $linha = trim($linha);
         $valor = explode(';', $linha);
         $barra = $valor[0];
         $quantidade = $valor[1];
         $produto = new Produto();
-        //console_log("Buscando dados... - ".date('H:i:s'));
         $produto = buscarDadosProduto($barra);
+        inserirDados($produto, $quantidade);
+
+
+        $produto->setQuantidade($quantidade);
+        $produtos[] = $produto;
+        //$produtos[] = $produtolist = array('codInt' => $codigoInterno, 'quantidade' => $quantidade);
+        //inserirDados($produto, $quantidade);
         $descricao = $produto->getDescricao();
+        $codigoInterno = $produto->getCodigoInterno();
         console_log("Pegou os dados de $descricao - ".date('H:i:s'));
-        if ($produto) {?>
+        if ($produto) {
+          //inserirDados($produto, $quantidade);
+          ?>
             <tr>
               <td>
                   <?php echo $produto->getDescricao()?>
@@ -106,13 +116,12 @@
               </td>
             </tr>
         <?php
-        $contador++;
-          //inserirDados($produto, $quantidade);
+          $contador++;
         }else{
           ?>
           <tr>
               <td>
-                  <?php echo "Sem Produto";?>
+                <?php echo "Sem Produto";?>
               </td>
               <td>
                 <?php echo "-"?>
@@ -126,26 +135,26 @@
             </tr>
           <?php
         }
-
-        /*if ($connection->query("SELECT * FROM PRODUTOAUX WHERE PROCODAUX = '$barra'")) {
-          
-        }
-
-
-
-        $produto = array($valor[0], $valor[1]);
-        array_push($produtos, $produto);
-        //$arrayName = array('' => , );
-        //buscarDadosProduto($valor[0], $valor[1]);*/?>
-        <!--<li class="collection-item">Inserido!</li>-->
-    <?php
   		}
+      $produtosFinal = array();
+      $produtos2 = $produtos;
+      foreach ($produtos as $produto) {
+        foreach ($produtos2 as $produto2) {
+          if ($produto->getCodigoInterno() == $produto2->getCodigoInterno()) {
+            $quantidade = $produto->getQuantidade();
+            $quantidade2 = $produto2->getQuantidade();
+            echo "\n Quantidade: \t";
+            echo $quantidade+$quantidade2;
+          }else{
+
+          }
+        }
+      }
       //var_dump($produtos);
 	  ?>
       </form>
       </tbody>
     </table>
-    <?php echo date('H:i:s');?>
       <!--<div class="row">
         <button class="red darken-4 btn waves-effect waves-light center" type="submit">Alterar
           <i class="material-icons right">mode_edit</i>

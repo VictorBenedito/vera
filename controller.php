@@ -9,6 +9,23 @@ function console_log( $data ){
       echo '</script>';
 }
 
+function armazenarTxtTemporario($barra, $quantidade){
+  require('conexaoMysql.php');
+  $sql="INSERT INTO TXT_DADOS (TXT_BARRA, TXT_QUANTIDADE) VALUES ('$barra', '$quantidade')";
+  if ($connMysql->query($sql)) {
+        /*$produto->setBarra($barra);
+        $produto->setCodigoInterno($row_all[0]['PROCOD']);
+        $produto->setDescricao($row_all[0]['PRODES']);
+        $produto->setUnidade($row_all[0]['PROUNID']);
+        $produto->setPreco($row_all[0]['PROPRC1']);
+        return $produto;*/
+
+    echo "Criado com Sucesso!";
+  }else{
+    echo "Não foi possível criar a tabela!";
+  }
+}
+
 function buscarDadosProduto($barra){
   require('conexao.php');
   try {
@@ -74,6 +91,12 @@ function inserirDados($produto, $quantidade){
   } 
 }
 
+function sumarizar($array){
+  array_count_values($array);
+}
+
+$produto = '07896053410025';
+//armazenarTxtTemporario($produto, 7);
 //$codbar = "07893500012672";
 /*$codbar = "07896053410025";
 $produto = new Produto();
