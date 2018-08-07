@@ -11,6 +11,8 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <!-- Data Table -->  
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
   </head>
   <body>
     <!--MENU-->
@@ -29,20 +31,20 @@
         </div>
       </nav>
     </div>
-  <!--MENU MOBILE-->
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="index.php"><i class="material-icons">home</i>Home</a></li>
-    <li class="active"><a href="processa.php"><i class="material-icons">store</i>Produtos</a></li>
-  </ul>
-  <nav class="red darken-3">
-    <div class="nav-wrapper container">
-      <div class="col s12">
-        <a href="index.php" class="breadcrumb">Home</a>
-        <a href="processa.php" class="breadcrumb">Produtos</a>
+    <!--MENU MOBILE-->
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="index.php"><i class="material-icons">home</i>Home</a></li>
+      <li class="active"><a href="processa.php"><i class="material-icons">store</i>Produtos</a></li>
+    </ul>
+    <nav class="red darken-3">
+      <div class="nav-wrapper container">
+        <div class="col s12">
+          <a href="index.php" class="breadcrumb">Home</a>
+          <a href="processa.php" class="breadcrumb">Produtos</a>
+        </div>
       </div>
-    </div>
-  </nav>
-  <br> 
+    </nav>
+    <br> 
   <!--CORPO DA PÁGINA-->    
   <div class="row container">
     <h4>
@@ -55,7 +57,17 @@
       </a>
     </div>-->
  	  <!--<form class="col s12" action="" method="POST">-->
-    <ul class="collection">
+    <table id="produtostable" class="display">
+      <thead>
+          <tr>
+              <th>Descrição</th>
+              <th>Código Interno</th>
+              <th>Preço</th>
+              <th>Quantidade</th>
+          </tr>
+      </thead>
+      <tbody>
+      <form class="col l12" action="" method="POST">
     <?php
       require_once('controller.php');
       require_once("Produto.php");
@@ -67,18 +79,52 @@
         header("Location: index.php");
       }
       //$produtos = array();
+      $contador = 1;
       foreach($dados as $linha){
         $linha = trim($linha);
         $valor = explode(';', $linha);
         $barra = $valor[0];
         $quantidade = $valor[1];
         $produto = new Produto();
+        //console_log("Buscando dados... - ".date('H:i:s'));
         $produto = buscarDadosProduto($barra);
-        if ($produto) {
-          echo $produto->getDescricao(). "<br>";
+        $descricao = $produto->getDescricao();
+        console_log("Pegou os dados de $descricao - ".date('H:i:s'));
+        if ($produto) {?>
+            <tr>
+              <td>
+                  <?php echo $produto->getDescricao()?>
+              </td>
+              <td>
+                <?php echo $produto->getCodigoInterno()?>
+              </td>
+              <td>
+                <?php echo $produto->getPreco()?>
+              </td>
+              <td>
+                  <input value="<?php echo $quantidade?>" id="quantidade<?php echo($contador) ?>" type="text" >
+              </td>
+            </tr>
+        <?php
+        $contador++;
           //inserirDados($produto, $quantidade);
         }else{
-          echo "Sem Produto";
+          ?>
+          <tr>
+              <td>
+                  <?php echo "Sem Produto";?>
+              </td>
+              <td>
+                <?php echo "-"?>
+              </td>
+              <td>
+                <?php echo "-"?>
+              </td>
+              <td>
+                <?php echo "-"?>
+              </td>
+            </tr>
+          <?php
         }
 
         /*if ($connection->query("SELECT * FROM PRODUTOAUX WHERE PROCODAUX = '$barra'")) {
@@ -96,7 +142,10 @@
   		}
       //var_dump($produtos);
 	  ?>
-    </ul>
+      </form>
+      </tbody>
+    </table>
+    <?php echo date('H:i:s');?>
       <!--<div class="row">
         <button class="red darken-4 btn waves-effect waves-light center" type="submit">Alterar
           <i class="material-icons right">mode_edit</i>
@@ -107,18 +156,23 @@
     <!-- JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <!--Script Inicializador do Menu-->
     <script type="text/javascript">
       $(document).ready(function(){
         $('.sidenav').sidenav();
       });
       $(document).ready(function(){
-	    $('.collapsible').collapsible();
+        $('.collapsible').collapsible();
+      });
       //Menu Flutuante
       $(document).ready(function(){
-      $('.fixed-action-btn').floatingActionButton();
-  });
-	  });
+        $('.fixed-action-btn').floatingActionButton();
+      });
+      
+      $(document).ready( function () {
+        $('#produtostable').DataTable();
+      });
     </script>
   </body>
 </html>

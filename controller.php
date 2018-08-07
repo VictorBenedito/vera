@@ -3,6 +3,11 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
+function console_log( $data ){
+      echo '<script>';
+      echo 'console.log('. json_encode( $data ) .')';
+      echo '</script>';
+}
 
 function buscarDadosProduto($barra){
   require('conexao.php');
@@ -61,7 +66,7 @@ function inserirDados($produto, $quantidade){
   $unidade = $produto->getUnidade();
   $preco = $produto->getPreco(); 
 
-  $sql = "INSERT INTO coleta (colCodInt, colDescricao, colQuantidade, colUnidade, colPreco) VALUES ('$codInterno', '$descricao', '$quantidade', '$unidade', $preco)";
+  $sql = "INSERT INTO PRODUTO (PRO_CODINT, PRO_DESCRICAO, PRO_QUANTIDADE, PRO_UNIDADE, PRO_PRECO, PRO_COLETA) VALUES ('$codInterno', '$descricao', '$quantidade', '$unidade', $preco)";
   if ($connMysql->query($sql)) {
     echo "$descricao \t inserido!";
   }else{

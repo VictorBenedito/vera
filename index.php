@@ -5,6 +5,7 @@
 <html lang="pt">
   <head>
     <meta charset="utf-8">
+    <!--<META HTTP-EQUIV="Refresh" CONTENT="10"> 5 segundos -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
